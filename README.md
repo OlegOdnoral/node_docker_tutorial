@@ -24,7 +24,16 @@
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Docker **(notice you must install Docker first)**
+
+Repo contains ```Dockerfile``` for build image from scratch.
+
+To run repo in Docker execute in root folder ```docker build -t nest-docker .``` this command will build repo to Docker image. 
+Notice that ```nest-docker``` it`s a name for image wich we will received after build. You always can specify own name. 
+After you build repo to Docker image just run ```docker start nest-docker``` after that app must be available on [localhost:3000](localhost:3000)
+For stop image run ```docker stop nest-docker```
+
+## Description 
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
