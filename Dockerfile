@@ -1,24 +1,34 @@
-FROM node:12.14-alpine
+# Production stage
+FROM node:lts-alpine as prod
+
+#ENV NODE_ENV=production
 
 EXPOSE 3000
 
 RUN apk add --no-cache tini
 
-#RUN groupadd --gid 1000 node \
-#    && useradd --uid 1000 --gid node --shell /bin/bash --create-home node
-
 COPY . ./nest
 
-RUN chown -R node:node ./nest
+WORKDIR /nest/
 
-WORKDIR /nest
+RUN npm i --silent && npm run build --silent && npm cache clean --force --silent
 
-#USER node
-
-RUN npm i && npm run build && npm cache clean --force 
-
-WORKDIR /nest/dist
+#RUN chown -R node:node .
 
 ENTRYPOINT [ "/sbin/tini", "--" ]
 
-CMD ["node", "main.js"]
+CMD ["node", "./dist/main.js"]
+
+# Development stage
+FROM prod as dev
+
+#ENV NODE_ENV=development
+
+CMD ["npm", "run" , "start:dev", "--silent"]
+
+# Testing stage
+FROM dev as test
+
+#ENV NODE_ENV=testing
+
+CMD ["npm", "run", "test", "--silent"]
