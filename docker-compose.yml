@@ -3,8 +3,8 @@ version: '2.2'
 
 services:
   nest:
-    image: nest-docker
+    image: nest_docker_image:dev
     restart: always
-    container_name: nest-docker
+    container_name: nest_docker_image
     ports:
       - "3000:3000"
